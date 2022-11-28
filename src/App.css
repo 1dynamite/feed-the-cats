@@ -108,3 +108,22 @@
     opacity: 1;
   }
 }
+
+@media screen and (max-width: 920px) {
+  .app {
+    height: auto;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .cats-container {
+    height: 100vh;
+  }
+}
+
+@media screen and (max-width: 540px) {
+  .cats-container {
+    width: 20rem;
+  }
+}
