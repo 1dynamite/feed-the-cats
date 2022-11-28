@@ -1,0 +1,110 @@
+.app {
+  display: flex;
+  height: 100vh;
+  justify-content: center;
+  padding: 1rem;
+  gap: 1rem;
+  background-color: whitesmoke;
+}
+
+.cats-container {
+  height: 100%;
+  width: 30rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.cats-list-container {
+  flex-grow: 1;
+  padding: 0.7rem 1rem;
+  background-color: white;
+  overflow: auto;
+}
+.cats-list {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  overflow-y: scroll;
+}
+
+.cat-item {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 0.8rem;
+  background-color: whitesmoke;
+  gap: 1.3rem;
+  position: relative;
+}
+
+.heading {
+  font-size: larger;
+  font-weight: bolder;
+  color: rgba(0, 0, 0, 0.9);
+}
+
+.collar {
+  height: 4rem;
+  width: 6rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+}
+
+.info {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.info > span:nth-child(1) {
+  margin-bottom: 0.3rem;
+}
+
+.info > span:nth-child(2) {
+  font-size: smaller;
+}
+
+.cat-color {
+  height: 2rem;
+  width: 2rem;
+  border-radius: 50%;
+}
+
+.collar > span {
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.collar-img {
+  width: 55%;
+  height: 55%;
+  object-fit: cover;
+}
+
+.feed-me-popup {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: larger;
+  animation-name: onMount;
+  animation-duration: 0.3s;
+}
+
+@keyframes onMount {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
