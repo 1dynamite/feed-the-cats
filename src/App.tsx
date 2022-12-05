@@ -1,127 +1,11 @@
 import React from "react";
 import "./App.css";
-
-interface CatType {
-  id: number;
-  hasCollar: boolean;
-  name: string;
-  color: string;
-  age: string;
-  hungry: boolean;
-  timeoutId: undefined | ReturnType<typeof setTimeout>;
-}
-
-interface CatItemPropsType extends CatType {
-  handleFeedCat: (name: number) => void;
-}
-
-const getRandomCat = (() => {
-  const predefinedNames = [
-    "Max",
-    "Oscar",
-    "Bella",
-    "Coco",
-    "Simba",
-    "Willow",
-    "Milo",
-    "Leo",
-    "Arya",
-    "Charlie",
-    "Loki",
-    "Daisy",
-    "Luna",
-    "Shireen",
-    "Lucy",
-    "Pumpkin",
-    "Stella",
-    "Ollie",
-    "Jax",
-    "Lola",
-    "Lana",
-    "Oreo",
-    "Grace",
-  ];
-  const predefinedColors = [
-    "rgba(0,0,0,0.1)",
-    "rgba(0,0,0,0.2)",
-    "rgba(0,0,0,0.3)",
-    "rgba(0,0,0,0.4)",
-    "rgba(0,0,0,0.5)",
-    "rgba(0,0,0,0.6)",
-    "rgba(0,0,0,0.7)",
-    "rgba(0,0,0,0.8)",
-    "rgba(0,0,0,0.9)",
-    "black",
-    "#7f1d1d",
-    "#7c2d12",
-    "#fbbf24",
-    "#facc15",
-    "#eab308",
-    "#d97706",
-    "#fef9c3",
-    "#f97316",
-    "#a16207",
-    "#fde68a",
-    "white",
-  ];
-
-  let id = 0;
-
-  return () =>
-    ({
-      id: id++,
-      hasCollar: Math.random() < 0.5,
-      name: predefinedNames[
-        Math.trunc(Math.random() * 100) % predefinedNames.length
-      ],
-      color:
-        predefinedColors[
-          Math.trunc(Math.random() * 100) % predefinedColors.length
-        ],
-      age: `${(0.1 + Math.random() * 10).toFixed(1)} years old`,
-      hungry: false,
-      timeoutId: undefined,
-    } as CatType);
-})();
-
-class CatItem extends React.Component<CatItemPropsType, {}> {
-  render() {
-    return (
-      <div className="cat-item">
-        <div className="collar">
-          {this.props.hasCollar ? (
-            <img
-              className="collar-img"
-              alt="collar"
-              src="https://i.imgur.com/hIVdMR6.jpg"
-            />
-          ) : (
-            <span>No collar</span>
-          )}
-        </div>
-        <div className="info">
-          <span>{this.props.name}</span>
-          <span>{this.props.age}</span>
-        </div>
-        <div
-          className="cat-color"
-          style={{ backgroundColor: this.props.color }}
-        ></div>
-        {this.props.hungry ? (
-          <div
-            className="feed-me-popup"
-            onClick={() => this.props.handleFeedCat(this.props.id)}
-          >
-            Feed me
-          </div>
-        ) : null}
-      </div>
-    );
-  }
-}
+import { CatType } from "./types";
+import getRandomCat from "./utils";
+import CatItem from "./cat-item";
 
 class App extends React.Component<{}, { allCats: CatType[] }> {
-  timeoutId: undefined | ReturnType<typeof setTimeout> = undefined;
+  intervalId: undefined | ReturnType<typeof setInterval> = undefined;
 
   constructor(props: {}) {
     super(props);
@@ -139,15 +23,16 @@ class App extends React.Component<{}, { allCats: CatType[] }> {
       }));
 
       this.startTimeoutForCatItem(newCat.id);
-
-      this.timeoutId = setTimeout(cb, 5000);
     };
 
-    this.timeoutId = setTimeout(cb);
+    cb();
+
+    this.intervalId = setInterval(cb, 5000);
   }
 
   componentWillUnmount(): void {
-    clearTimeout(this.timeoutId);
+    this.setState({ allCats: [] }); // In development mode, cb() in componentDidMount will execute twice, so two cats will be added, this can be removed in production mode
+    clearTimeout(this.intervalId);
     this.state.allCats.forEach((el) => clearTimeout(el.timeoutId));
   }
 
