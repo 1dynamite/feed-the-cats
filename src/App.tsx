@@ -24,7 +24,7 @@ function App() {
 
     return () => {
       setCats([]); // In development mode, cb() in componentDidMount will execute twice, so two cats will be added, this can be removed in production mode
-      clearTimeout(intervalId);
+      clearInterval(intervalId);
       cats.forEach((cat) => clearTimeout(cat.timeoutId));
     };
   }, []);
