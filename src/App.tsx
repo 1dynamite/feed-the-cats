@@ -32,7 +32,7 @@ class App extends React.Component<{}, { allCats: CatType[] }> {
 
   componentWillUnmount(): void {
     this.setState({ allCats: [] }); // In development mode, cb() in componentDidMount will execute twice, so two cats will be added, this can be removed in production mode
-    clearTimeout(this.intervalId);
+    clearInterval(this.intervalId);
     this.state.allCats.forEach((el) => clearTimeout(el.timeoutId));
   }
 
